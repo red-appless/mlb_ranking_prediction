@@ -1,0 +1,43 @@
+name: Update MLB Standings
+
+on:
+  # 1. 定期実行 (例：毎日15時 JST)
+  schedule:
+    - cron: '0 6 * * *' # UTCで6時 = JSTで15時
+
+  # 2. GitHub画面からの手動実行
+  workflow_dispatch:
+
+  # 3. 外部 (Webサイトのボタン) からの実行
+  repository_dispatch:
+    types: [manual-update]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # 変更をコミットするために必要
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+
+    - name: Run update script
+      run: python update_standings.py
+
+    - name: Commit and push if changed
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add data.json
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Update standings.json [skip ci]" && git push)

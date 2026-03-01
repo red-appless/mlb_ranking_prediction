@@ -2,9 +2,7 @@ import requests
 import json
 import datetime
 
-# ==========================================
-# チーム名とIDのマッピング (日本語管理用)
-# ==========================================
+# チーム名とIDのマッピング
 TEAM_ID = {
     "ブルージェイズ": 147, "オリオールズ": 110, "ヤンキース": 111, "レッドソックス": 141, "レイズ": 139,
     "タイガース": 116, "ロイヤルズ": 118, "ガーディアンズ": 114, "ツインズ": 142, "ホワイトソックス": 145,
@@ -14,12 +12,9 @@ TEAM_ID = {
     "ドジャース": 119, "ジャイアンツ": 137, "ダイアモンドバックス": 109, "パドレス": 135, "ロッキーズ": 115
 }
 
-# 表示用に「IDから日本語名」を引く逆引き辞書を自動生成
 ID_TO_NAME = {v: k for k, v in TEAM_ID.items()}
 
-# ==========================================
-# 友達3人の予想順位 (IDで管理)
-# ==========================================
+# 3人の予想データ
 PREDICTIONS = {
     "井口健介": {
         "American League East": [141, 147, 111, 110, 139],
@@ -53,25 +48,21 @@ def count_inversions(actual, prediction):
     rank_map = {team_id: i for i, team_id in enumerate(actual)}
     try:
         prediction_ranks = [rank_map[team_id] for team_id in prediction]
-    except KeyError:
-        return 0
-    
+    except KeyError: return 0
     inversions = 0
     for i in range(n):
         for j in range(i + 1, n):
-            if prediction_ranks[i] > prediction_ranks[j]:
-                inversions += 1
+            if prediction_ranks[i] > prediction_ranks[j]: inversions += 1
     return inversions
 
 def main():
-    url = "https://statsapi.mlb.com/api/v1/standings?leagueId=103,104&season=2025"
+    url = "https://statsapi.mlb.com/api/v1/standings?leagueId=103,104&season=2026"
     try:
         response = requests.get(url)
         response.raise_for_status()
         mlb_data = response.json()
     except Exception as e:
-        print(f"Error: {e}")
-        return
+        print(f"Error: {e}"); return
 
     results = {
         "last_updated": datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9))).strftime("%Y-%m-%d %H:%M:%S JST"),
@@ -86,31 +77,21 @@ def main():
 
     for record in mlb_data.get("records", []):
         division_name = record["division"]["name"]
-        if division_name not in target_divisions:
-            continue
+        if division_name not in target_divisions: continue
 
         actual_standings = [team["team"]["id"] for team in record["teamRecords"]]
         division_data = {"name": division_name, "teams": []}
 
         for user, div_preds in PREDICTIONS.items():
-            user_pred = div_preds.get(division_name, [])
-            results["scores"][user] += count_inversions(actual_standings, user_pred)
+            results["scores"][user] += count_inversions(actual_standings, div_preds.get(division_name, []))
 
         for i, team_id in enumerate(actual_standings):
-            team_info = {
-                "id": team_id,
-                "name": ID_TO_NAME.get(team_id, f"ID:{team_id}"),
-                "actual_rank": i + 1,
-                "predictions": {}
-            }
+            team_info = {"id": team_id, "name": ID_TO_NAME.get(team_id, f"ID:{team_id}"), "actual_rank": i + 1, "predictions": {}}
             for user, div_preds in PREDICTIONS.items():
                 user_pred = div_preds.get(division_name, [])
-                try:
-                    team_info["predictions"][user] = user_pred.index(team_id) + 1
-                except ValueError:
-                    team_info["predictions"][user] = "-"
+                try: team_info["predictions"][user] = user_pred.index(team_id) + 1
+                except ValueError: team_info["predictions"][user] = "-"
             division_data["teams"].append(team_info)
-
         results["divisions"].append(division_data)
 
     with open("data.json", "w", encoding="utf-8") as f:

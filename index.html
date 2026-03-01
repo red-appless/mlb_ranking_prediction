@@ -1,150 +1,28 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 MLB 順位予想バトル</title>
-    <style>
-        body { font-family: sans-serif; background-color: #f4f4f4; padding: 20px; }
-        .container { max-width: 800px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        h1 { text-align: center; color: #333; }
-        .header-controls { text-align: center; margin-bottom: 20px; }
-        button { padding: 10px 20px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
-        button:hover { background-color: #0056b3; }
-        .status { color: #666; margin-top: 10px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 10px; text-align: center; }
-        th { background-color: #f8f9fa; }
-        .scoreboard { margin-bottom: 30px; }
-        .scoreboard th { background-color: #343a40; color: white; }
-    </style>
-</head>
-<body>
+// index.html の script 部分をこれに差し替え
+document.getElementById('updateButton').onclick = async () => {
+    if (!confirm("データを更新しますか？")) return;
 
-<div class="container">
-    <h1>2026 MLB 順位予想バトル</h1>
-    
-    <div class="header-controls">
-        <button id="updateButton">データを更新</button>
-        <p class="status">最終更新: <span id="lastUpdated">-</span></p>
-    </div>
+    const btn = document.getElementById('updateButton');
+    btn.disabled = true;
+    btn.innerText = "リクエスト送信中...";
 
-    <div class="scoreboard">
-        <h2>総合スコア (乖離が少ない順)</h2>
-        <table id="scoreTable">
-            <thead>
-                <tr><th>順位</th><th>名前</th><th>合計反転数</th></tr>
-            </thead>
-            <tbody>
-                </tbody>
-        </table>
-    </div>
+    // 先ほどコピーしたGoogle Apps ScriptのURL
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbyO5_oG_IAp8whEPVHdSLKiP945F-fCb9uPymUo6hm3ZNu93-rqZKpQj-bfv7diGcXZ/exec";
 
-    <div id="divisionsContainer">
-        </div>
-</div>
+    try {
+        // GASはPOSTリクエストで叩きます
+        const response = await fetch(GAS_URL, {
+            method: 'POST',
+            mode: 'no-cors' // GASの制限を回避するための設定
+        });
 
-<script>
-    // ============================================================
-    // ★重要：セキュリティリスク（トークンの露出）★
-    // 友達3人でしか見ないとしても、このトークンは誰でも見れてしまいます。
-    // 本来は絶対にやってはいけない実装です。
-    // ============================================================
-    const GITHUB_TOKEN = "your_personal_access_token_here"; // ←ここにPATを貼り付ける
-    const REPO_OWNER = "your_username_here";               // ←あなたのGitHubユーザー名
-    const REPO_NAME = "your_repo_name_here";              // ←リポジトリ名
-
-    // 1. data.jsonを読み込んで画面を描画
-    async function loadData() {
-        try {
-            const response = await fetch('./data.json?' + new Date().getTime()); // キャッシュ回避
-            if (!response.ok) throw new Error('Data not found');
-            const data = await response.json();
-
-            document.getElementById('lastUpdated').textContent = data.last_updated;
-
-            // スコアボードの描画
-            const scores = Object.entries(data.scores).sort((a, b) => a[1] - b[1]); // スコア昇順
-            const scoreBody = document.querySelector('#scoreTable tbody');
-            scoreBody.innerHTML = '';
-            scores.forEach(([user, score], index) => {
-                const row = `<tr><td>${index + 1}</td><td>${user}</td><td>${score}</td></tr>`;
-                scoreBody.insertAdjacentHTML('beforeend', row);
-            });
-
-            // 地区ごとの順位表の描画 (AL Eastのみ例示)
-            const divContainer = document.getElementById('divisionsContainer');
-            divContainer.innerHTML = '';
-            data.divisions.forEach(div => {
-                const table = `
-                    <h3>${div.name}</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>公式順位</th>
-                                <th>チーム</th>
-                                ${Object.keys(data.scores).map(user => `<th>${user}予想</th>`).join('')}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${div.teams.map(team => `
-                                <tr>
-                                    <td>${team.actual_rank}</td>
-                                    <td>${team.name}</td>
-                                    ${Object.keys(data.scores).map(user => `<td>${team.predictions[user]}</td>`).join('')}
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                `;
-                divContainer.insertAdjacentHTML('beforeend', table);
-            });
-
-        } catch (error) {
-            console.error('Error loading data:', error);
-            document.getElementById('lastUpdated').textContent = 'エラー (data.jsonがまだないかも)';
-        }
+        // 'no-cors'モードの場合、レスポンスの内容は読めませんが
+        // リクエストが飛んだ時点でGASがGitHubを動かしてくれます
+        alert("更新要求を送信しました！2分後にリロードしてください。");
+        btn.innerText = "更新要求済み";
+    } catch (error) {
+        alert("エラーが発生しました。");
+        btn.disabled = false;
+        btn.innerText = "最新データに更新";
     }
-
-    // 2. 更新ボタンの処理 (GitHub APIを叩く)
-    document.getElementById('updateButton').addEventListener('click', async () => {
-        if (!confirm('データを更新しますか？（Actionsが走り出すため、反映まで数分かかります）')) return;
-        
-        const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/dispatches`;
-        const button = document.getElementById('updateButton');
-        button.textContent = '更新要求送信中...';
-        button.disabled = true;
-
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `token ${GITHUB_TOKEN}`,
-                    'Accept': 'application/vnd.github.v3+json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    event_type: 'manual-update' // Actions側のtypesと合わせる
-                })
-            });
-
-            if (response.ok) {
-                alert('更新を要求しました。GitHub Actionsの完了をお待ちください（約2分）。');
-                button.textContent = '更新要求完了 (待機中)';
-            } else {
-                throw new Error(await response.text());
-            }
-        } catch (error) {
-            console.error('Error triggering update:', error);
-            alert('更新要求に失敗しました。トークンや設定を確認してください。');
-            button.textContent = 'データを更新';
-            button.disabled = false;
-        }
-    });
-
-    // 初期読み込み
-    loadData();
-</script>
-
-</body>
-</html>
+};

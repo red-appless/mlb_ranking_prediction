@@ -10,38 +10,41 @@
             --mlb-red: #E31937;
             --bg-color: #f4f7f9;
         }
-        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); margin: 0; padding: 20px; color: #333; }
-        .container { max-width: 1100px; margin: 0 auto; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: var(--bg-color); margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 25px; }
+        h1, h2, h3 { color: var(--mlb-blue); text-align: center; }
         
         /* Navigation */
-        .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .back-btn { text-decoration: none; color: var(--mlb-blue); font-weight: bold; display: none; }
+        .back-btn { display: inline-block; margin-bottom: 15px; color: var(--mlb-blue); font-weight: bold; text-decoration: none; cursor: pointer; }
 
-        .card { background: white; padding: 25px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 25px; border-top: 5px solid var(--mlb-blue); }
-        h1, h2, h3 { color: var(--mlb-blue); text-align: center; margin-top: 0; }
+        /* Buttons & Controls */
+        .header-box { text-align: center; margin-bottom: 10px; }
+        button { background-color: var(--mlb-red); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        button:hover { background-color: #b3142b; }
+        button:disabled { background-color: #ccc; cursor: not-allowed; }
+
+        /* Table Styling */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.95em; }
+        th, td { padding: 10px 8px; border: 1px solid #eee; text-align: center; }
+        th { background-color: var(--mlb-blue); color: white; }
+        tr:nth-child(even) { background-color: #f8f9fa; }
         
-        /* Ranking Table */
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; border-radius: 8px; overflow: hidden; }
-        th, td { padding: 15px; text-align: center; border-bottom: 1px solid #eee; }
-        th { background-color: var(--mlb-blue); color: white; font-weight: 600; }
         .clickable-name { color: var(--mlb-blue); text-decoration: underline; cursor: pointer; font-weight: bold; }
-        .score-total { font-size: 1.2em; font-weight: bold; color: var(--mlb-red); }
+        .score-total { font-size: 1.3em; font-weight: bold; color: var(--mlb-red); }
 
-        /* Player Page Specific */
-        .player-header { background: linear-gradient(135deg, var(--mlb-blue), #004ba0); color: white; padding: 40px; border-radius: 16px; margin-bottom: 30px; text-align: center; }
-        .player-header h1 { color: white; margin: 0; font-size: 2.5em; }
-        
-        .division-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
-        .prediction-card { background: white; border-radius: 12px; padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .team-row { display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #f0f0f0; }
-        .team-row:last-child { border-bottom: none; }
-        .rank-num { width: 30px; font-weight: bold; font-size: 1.1em; color: #666; }
-        .team-logo { width: 40px; height: 40px; margin: 0 15px; object-fit: contain; }
-        .team-name { font-weight: 600; flex-grow: 1; }
+        /* Logo & Team Cell */
+        .team-cell { display: flex; align-items: center; justify-content: flex-start; gap: 10px; text-align: left; }
+        .team-logo { width: 24px; height: 24px; object-fit: contain; }
+        .team-logo-large { width: 40px; height: 40px; }
 
-        /* Controls */
-        .btn-update { background-color: var(--mlb-red); color: white; border: none; padding: 12px 24px; border-radius: 30px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 10px rgba(227,25,55,0.3); }
-        .btn-update:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(227,25,55,0.4); }
+        /* Grid Layout */
+        .division-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(550px, 1fr)); gap: 20px; }
+
+        /* Individual Page Elements */
+        .player-header { background: var(--mlb-blue); color: white; padding: 30px; border-radius: 12px; text-align: center; margin-bottom: 20px; }
+        .prediction-row { display: flex; align-items: center; padding: 12px; border-bottom: 1px solid #eee; background: white; }
+        .rank-badge { width: 30px; font-weight: bold; color: #666; }
         
         .hidden { display: none; }
     </style>
@@ -51,31 +54,28 @@
         <div id="topPage">
             <div class="card">
                 <h1>⚾ MLB 順位予想バトル 2026</h1>
-                <div style="text-align: center;">
-                    <button id="updateButton" class="btn-update">最新データに更新</button>
-                    <p style="font-size: 0.9em; color: #666;">最終更新: <span id="lastUpdated">取得中...</span></p>
+                <div class="header-box">
+                    <button id="updateButton">最新データに更新</button>
+                    <p>最終更新: <span id="lastUpdated">取得中...</span></p>
                 </div>
             </div>
 
             <div class="card">
                 <h2>🏆 総合ランキング</h2>
-                <p style="text-align:center; font-size: 0.9em; color: #888;">名前をクリックすると各プレイヤーの予想表を表示します</p>
                 <table id="scoreTable">
-                    <thead><tr><th>順位</th><th>プレイヤー</th><th>合計反転数</th></tr></thead>
+                    <thead><tr><th>位</th><th>プレイヤー</th><th>合計反転数</th></tr></thead>
                     <tbody></tbody>
                 </table>
             </div>
-            
+
             <div class="division-grid" id="divisionsContainer"></div>
         </div>
 
         <div id="playerPage" class="hidden">
-            <div class="nav-bar">
-                <a href="#" class="back-btn" id="backBtn" style="display: block;">← ランキングに戻る</a>
-            </div>
+            <span class="back-btn" onclick="location.hash=''">← 総合ランキングに戻る</span>
             <div class="player-header">
-                <h1 id="detailPlayerName">プレイヤー名</h1>
-                <p>2026 Season Predictions</p>
+                <h1 id="detailPlayerName"></h1>
+                <p>個人予想順位リスト</p>
             </div>
             <div class="division-grid" id="playerPredictionsGrid"></div>
         </div>
@@ -85,31 +85,66 @@
         const GAS_URL = "https://script.google.com/macros/s/AKfycbyO5_oG_IAp8whEPVHdSLKiP945F-fCb9uPymUo6hm3ZNu93-rqZKpQj-bfv7diGcXZ/exec";
         let globalData = null;
 
-        // チームIDからロゴURLを取得
-        const getLogoUrl = (id) => `https://www.mlbstatic.com/team-logos/${id}.svg`;
+        // 公式ロゴURL
+        const getLogo = (id) => `https://www.mlbstatic.com/team-logos/${id}.svg`;
 
         async function loadData() {
             try {
                 const res = await fetch('./data.json?' + Date.now());
                 globalData = await res.json();
                 renderTopPage();
-                
-                // URLハッシュがある場合は詳細表示
                 handleRouting();
             } catch (e) { document.getElementById('lastUpdated').innerText = "データ未生成"; }
         }
 
         function renderTopPage() {
             document.getElementById('lastUpdated').innerText = globalData.last_updated;
+
+            // 総合スコア
             const scoreBody = document.querySelector('#scoreTable tbody');
             scoreBody.innerHTML = Object.entries(globalData.scores)
                 .sort((a, b) => a[1] - b[1])
                 .map(([name, score], i) => `
                     <tr>
                         <td>${i+1}</td>
-                        <td><span class="clickable-name" onclick="location.hash='${name}'">${name}</span></td>
+                        <td><span class="clickable-name" onclick="location.hash='${encodeURIComponent(name)}'">${name}</span></td>
                         <td class="score-total">${score}</td>
                     </tr>`).join('');
+
+            // 各地区の比較表（元の形式 + ロゴ）
+            const divContainer = document.getElementById('divisionsContainer');
+            divContainer.innerHTML = globalData.divisions.map(div => `
+                <div class="card">
+                    <h3>${div.name}</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:50px">実順位</th>
+                                <th>チーム</th>
+                                <th style="width:60px">井口</th>
+                                <th style="width:60px">細川</th>
+                                <th style="width:60px">田中</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${div.teams.map(t => `
+                                <tr>
+                                    <td>${t.actual_rank}</td>
+                                    <td>
+                                        <div class="team-cell">
+                                            <img class="team-logo" src="${getLogo(t.id)}" alt="">
+                                            <span>${t.name}</span>
+                                        </div>
+                                    </td>
+                                    <td style="background:#fffde7">${t.predictions["井口健介"]}</td>
+                                    <td style="background:#f1f8e9">${t.predictions["細川峻平"]}</td>
+                                    <td style="background:#e3f2fd">${t.predictions["田中雄太郎"]}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `).join('');
         }
 
         function renderPlayerDetail(playerName) {
@@ -118,34 +153,31 @@
             document.getElementById('detailPlayerName').innerText = playerName;
 
             const grid = document.getElementById('playerPredictionsGrid');
-            grid.innerHTML = '';
-
-            // data.jsonのdivisionsをベースに、そのプレイヤーの順位を表示
-            globalData.divisions.forEach(div => {
-                const divCard = document.createElement('div');
-                divCard.className = 'prediction-card';
-                divCard.innerHTML = `<h3>${div.name}</h3>`;
-
-                // その人の予想順にソートして表示
+            grid.innerHTML = globalData.divisions.map(div => {
                 const sortedTeams = [...div.teams].sort((a, b) => a.predictions[playerName] - b.predictions[playerName]);
-
-                sortedTeams.forEach(team => {
-                    divCard.innerHTML += `
-                        <div class="team-row">
-                            <div class="rank-num">${team.predictions[playerName]}</div>
-                            <img class="team-logo" src="${getLogoUrl(team.id)}" alt="logo" onerror="this.src='https://www.mlbstatic.com/team-logos/league/1.svg'">
-                            <div class="team-name">${team.name}</div>
-                        </div>
-                    `;
-                });
-                grid.appendChild(divCard);
-            });
+                return `
+                    <div class="card">
+                        <h3>${div.name}</h3>
+                        ${sortedTeams.map(t => `
+                            <div class="prediction-row">
+                                <div class="rank-badge">${t.predictions[playerName]}</div>
+                                <img class="team-logo team-logo-large" src="${getLogo(t.id)}" alt="">
+                                <div style="margin-left:15px">
+                                    <div style="font-weight:bold">${t.name}</div>
+                                    <div style="font-size:0.8em; color:#888">現在 ${t.actual_rank}位</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }).join('');
         }
 
         function handleRouting() {
             const hash = decodeURIComponent(location.hash.replace('#', ''));
             if (hash && globalData && globalData.scores[hash] !== undefined) {
                 renderPlayerDetail(hash);
+                window.scrollTo(0, 0);
             } else {
                 document.getElementById('topPage').classList.remove('hidden');
                 document.getElementById('playerPage').classList.add('hidden');
@@ -155,13 +187,13 @@
         window.onhashchange = handleRouting;
 
         document.getElementById('updateButton').onclick = async () => {
-            if(!confirm("GitHub Actionsを起動しますか？（反映まで約2分）")) return;
+            if(!confirm("GitHub Actionsを起動しますか？")) return;
             const btn = document.getElementById('updateButton');
-            btn.disabled = true; btn.innerText = "リクエスト送信中...";
+            btn.disabled = true; btn.innerText = "GAS送信中...";
             try {
                 await fetch(GAS_URL, { method: 'POST', mode: 'no-cors' });
-                alert("送信完了！反映まで約2分かかります。");
-            } catch (e) { alert("エラーが発生しました。"); btn.disabled = false; }
+                alert("送信完了！2分後にリロードしてください。");
+            } catch (e) { alert("エラー"); btn.disabled = false; }
         };
 
         loadData();

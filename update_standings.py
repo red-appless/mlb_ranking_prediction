@@ -2,7 +2,7 @@ import requests
 import json
 import datetime
 
-# 1. チーム名とIDのマッピング (MLB APIの実数値に修正済み)
+# 1. チーム名とIDのマッピング (APIの実数値に準拠)
 TEAM_ID = {
     "ブルージェイズ": 141, "オリオールズ": 110, "ヤンキース": 147, "レッドソックス": 111, "レイズ": 139,
     "タイガース": 116, "ロイヤルズ": 118, "ガーディアンズ": 114, "ツインズ": 142, "ホワイトソックス": 145,
@@ -11,10 +11,19 @@ TEAM_ID = {
     "ブリュワーズ": 158, "カブス": 112, "パイレーツ": 134, "レッズ": 113, "カージナルス": 138,
     "ドジャース": 119, "ジャイアンツ": 137, "ダイアモンドバックス": 109, "パドレス": 135, "ロッキーズ": 115
 }
-
 ID_TO_NAME = {v: k for k, v in TEAM_ID.items()}
 
-# 2. 3人の予想データ (修正後のID体系に基づき、順番が意図通りかご確認ください)
+# 2. 地区IDと名前の対応
+DIVISION_MAP = {
+    201: "American League East",
+    202: "American League Central",
+    200: "American League West",
+    204: "National League East",
+    205: "National League Central",
+    203: "National League West"
+}
+
+# 3. 予想データ
 PREDICTIONS = {
     "井口健介": {
         "American League East": [111, 141, 147, 110, 139],
@@ -43,18 +52,8 @@ PREDICTIONS = {
 }
 
 def count_inversions(actual, prediction):
-    """
-    ケンドールの順位相関係数（の分子である転倒数）を計算。
-    実際の順位と予想の順位がどれだけ入れ替わっているかをカウント。
-    """
-    n = len(actual)
-    if n != len(prediction): return 0
-    # 実際の順位に基づいた各チームの重み付け
     rank_map = {team_id: i for i, team_id in enumerate(actual)}
-    try:
-        prediction_ranks = [rank_map[team_id] for team_id in prediction if team_id in rank_map]
-    except KeyError: return 0
-    
+    prediction_ranks = [rank_map[tid] for tid in prediction if tid in rank_map]
     inversions = 0
     for i in range(len(prediction_ranks)):
         for j in range(i + 1, len(prediction_ranks)):
@@ -63,6 +62,7 @@ def count_inversions(actual, prediction):
     return inversions
 
 def main():
+    # 2025年のデータを確認中とのことなのでURLを固定、通常はyear=datetime.now().year
     url = "https://statsapi.mlb.com/api/v1/standings?leagueId=103,104&season=2025"
     
     try:
@@ -70,7 +70,7 @@ def main():
         response.raise_for_status()
         mlb_data = response.json()
     except Exception as e:
-        print(f"API Error: {e}")
+        print(f"Error fetching data: {e}")
         return
 
     results = {
@@ -79,53 +79,46 @@ def main():
         "divisions": []
     }
 
-    target_divisions = [
-        "American League East", "American League Central", "American League West",
-        "National League East", "National League Central", "National League West"
-    ]
-
-    # APIから地区ごとにデータを抽出
     if "records" not in mlb_data:
-        print("Error: 'records' key not found in API response.")
+        print("Invalid API response format")
         return
 
-    for record in mlb_data.get("records", []):
-        division_name = record.get("division", {}).get("name")
-        if division_name not in target_divisions:
+    for record in mlb_data["records"]:
+        div_id = record.get("division", {}).get("id")
+        if div_id not in DIVISION_MAP:
             continue
-
-        # 実順位のチームIDリスト（APIは順位順に並んでいる）
+        
+        division_name = DIVISION_MAP[div_id]
         actual_standings = [team["team"]["id"] for team in record.get("teamRecords", [])]
         
-        division_data = {"name": division_name, "teams": []}
+        if not actual_standings:
+            continue
 
-        # スコア（転倒数）を加算
-        for user, div_preds in PREDICTIONS.items():
-            user_pred_list = div_preds.get(division_name, [])
-            results["scores"][user] += count_inversions(actual_standings, user_pred_list)
+        division_entry = {"name": division_name, "teams": []}
 
-        # 表示用データの生成
+        # スコア計算
+        for user in PREDICTIONS.keys():
+            user_pred = PREDICTIONS[user].get(division_name, [])
+            results["scores"][user] += count_inversions(actual_standings, user_pred)
+
+        # チーム詳細データ
         for i, team_id in enumerate(actual_standings):
             team_info = {
                 "id": team_id,
-                "name": ID_TO_NAME.get(team_id, f"ID:{team_id}"),
+                "name": ID_TO_NAME.get(team_id, f"Unknown({team_id})"),
                 "actual_rank": i + 1,
-                "predictions": {}
+                "predictions": {user: PREDICTIONS[user][division_name].index(team_id) + 1 
+                               for user in PREDICTIONS if team_id in PREDICTIONS[user].get(division_name, [])}
             }
-            for user, div_preds in PREDICTIONS.items():
-                user_pred = div_preds.get(division_name, [])
-                try:
-                    team_info["predictions"][user] = user_pred.index(team_id) + 1
-                except ValueError:
-                    team_info["predictions"][user] = "-"
-            division_data["teams"].append(team_info)
-            
-        results["divisions"].append(division_data)
+            division_entry["teams"].append(team_info)
+        
+        results["divisions"].append(division_entry)
 
-    # JSON出力
+    # 書き出し
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(results, f, ensure_ascii=False, indent=2)
-    print("Successfully updated data.json")
+    
+    print(f"Successfully updated. Divisions found: {len(results['divisions'])}")
 
 if __name__ == "__main__":
     main()

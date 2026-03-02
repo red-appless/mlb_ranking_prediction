@@ -1,280 +1,206 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MLB順位予想 2026</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MLB順位予想 2026</title>
+    <link rel="icon" type="image/svg+xml" href="https://www.mlbstatic.com/team-logos/league/1.svg">
+    <style>
+        :root {
+            --mlb-blue: #002D72;
+            --mlb-red: #E31937;
+            --bg-color: #f4f7f9;
+        }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: var(--bg-color); margin: 0; padding: 10px; color: #333; -webkit-text-size-adjust: 100%; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        /* カード基本スタイル */
+        .card { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px; border-top: 4px solid var(--mlb-blue); }
+        h1 { color: var(--mlb-blue); text-align: center; font-size: 1.5rem; margin: 10px 0; }
+        h2 { color: var(--mlb-blue); text-align: center; font-size: 1.2rem; }
+        h3 { color: var(--mlb-blue); text-align: center; font-size: 1.1rem; margin: 5px 0; }
+        
+        .header-box { text-align: center; margin-bottom: 5px; }
+        .update-btn { background-color: var(--mlb-red); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
 
-<style>
-:root{
-    --mlb-blue:#0a2a66;
-    --mlb-red:#d71920;
-    --bg:#f3f5f8;
-}
+        /* テーブルスタイル（モバイル対応） */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85rem; table-layout: fixed; }
+        th, td { padding: 8px 2px; border: 1px solid #eee; text-align: center; overflow: hidden; word-break: keep-all; }
+        th { background-color: var(--mlb-blue); color: white; font-size: 0.75rem; }
+        
+        /* 列の幅指定 */
+        .col-rank { width: 25px; }
+        .col-team { width: auto; }
+        .col-user { width: 35px; }
 
-body{
-    margin:0;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    background:var(--bg);
-    color:#222;
-}
+        .clickable-name { color: var(--mlb-blue); text-decoration: underline; cursor: pointer; font-weight: bold; }
+        .score-total { font-size: 1.1rem; font-weight: bold; color: var(--mlb-red); }
 
-/* ===============================
-   HERO
-================================ */
-.hero{
-    position:relative;
-    height:320px;
-    background:url("https://images.unsplash.com/photo-1508098682722-e99c643e7f8e?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    color:#fff;
-}
+        /* チーム名が縦にならないための設定 */
+        .team-cell { display: flex; align-items: center; justify-content: flex-start; gap: 4px; text-align: left; white-space: nowrap; overflow: hidden; }
+        .team-logo { width: 18px; height: 18px; flex-shrink: 0; }
+        .team-name-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.8rem; }
 
-.hero::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(10,42,102,0.85));
-}
+        /* レイアウト */
+        .division-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
 
-.hero-content{
-    position:relative;
-    z-index:2;
-}
+        /* 個別プレイヤーページ */
+        .back-btn { display: inline-block; margin-bottom: 10px; color: var(--mlb-blue); font-weight: bold; text-decoration: none; font-size: 0.9rem; }
+        .player-header { background: linear-gradient(135deg, var(--mlb-blue) 0%, #001a44 100%); color: white; padding: 30px 10px; border-radius: 12px; text-align: center; margin-bottom: 20px; }
+        #detailPlayerName { color: #ffffff !important; margin: 0; font-size: 1.8rem; font-weight: 900; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+        .player-header p { color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 0.9rem; }
 
-.hero h1{
-    font-size:42px;
-    margin:0 0 20px 0;
-    font-weight:900;
-    letter-spacing:1px;
-}
+        .prediction-row { display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #eee; background: white; }
+        .rank-badge { width: 30px; font-size: 1.1rem; font-weight: bold; color: #444; }
+        .team-logo-large { width: 32px; height: 32px; margin: 0 10px; }
 
-.update-btn{
-    background:var(--mlb-red);
-    border:none;
-    padding:12px 28px;
-    border-radius:8px;
-    font-weight:bold;
-    color:white;
-    font-size:16px;
-    cursor:pointer;
-}
+        /* PC向けの調整 */
+        @media (min-width: 800px) {
+            body { padding: 20px; }
+            h1 { font-size: 2rem; }
+            table { font-size: 0.95rem; }
+            .col-user { width: 60px; }
+            .team-logo { width: 24px; height: 24px; }
+            .team-name-text { font-size: 0.95rem; }
+            .division-grid { grid-template-columns: repeat(2, 1fr); }
+            #detailPlayerName { font-size: 3rem; }
+        }
 
-.update-btn:hover{
-    opacity:0.9;
-}
-
-.last-updated{
-    margin-top:15px;
-    font-size:14px;
-    opacity:0.9;
-}
-
-/* ===============================
-   CONTAINER
-================================ */
-.container{
-    max-width:1200px;
-    margin:-60px auto 40px auto;
-    padding:0 20px;
-}
-
-/* ===============================
-   CARD
-================================ */
-.card{
-    background:white;
-    border-radius:16px;
-    padding:25px;
-    margin-bottom:30px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.08);
-    border-top:6px solid var(--mlb-blue);
-}
-
-.card h2{
-    text-align:center;
-    color:var(--mlb-blue);
-    margin-bottom:20px;
-}
-
-.card h3{
-    text-align:center;
-    color:var(--mlb-blue);
-    margin-bottom:15px;
-}
-
-/* ===============================
-   TABLE
-================================ */
-table{
-    width:100%;
-    border-collapse:collapse;
-}
-
-th{
-    background:var(--mlb-blue);
-    color:white;
-    padding:10px;
-    font-size:14px;
-}
-
-td{
-    padding:10px;
-    text-align:center;
-    border-bottom:1px solid #eee;
-    font-size:14px;
-}
-
-td:first-child{
-    font-weight:bold;
-}
-
-.team-cell{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    justify-content:flex-start;
-}
-
-.team-cell img{
-    width:24px;
-    height:24px;
-}
-
-.team-cell span{
-    font-size:14px;
-}
-
-.score-total{
-    font-weight:bold;
-    color:var(--mlb-red);
-    font-size:18px;
-}
-
-.clickable-name{
-    cursor:pointer;
-    font-weight:bold;
-    color:var(--mlb-blue);
-}
-
-/* ===============================
-   GRID
-================================ */
-.division-grid{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:25px;
-}
-
-@media(min-width:900px){
-    .division-grid{
-        grid-template-columns:1fr 1fr;
-    }
-}
-</style>
+        .hidden { display: none; }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <div id="topPage">
+            <div class="card">
+                <h1>⚾ MLB 順位予想 2026</h1>
+                <div class="header-box">
+                    <button id="updateButton" class="update-btn">最新データに更新</button>
+                    <p style="font-size: 0.7rem; color: #666;">最終更新: <span id="lastUpdated">-</span></p>
+                </div>
+            </div>
 
-<!-- HERO -->
-<div class="hero">
-    <div class="hero-content">
-        <h1>MLB 順位予想 2026</h1>
-        <button id="updateButton" class="update-btn">最新データに基づく</button>
-        <div class="last-updated">
-            最終更新: <span id="lastUpdated">-</span>
+            <div class="card">
+                <h2>🏆 総合順位</h2>
+                <table id="scoreTable">
+                    <thead><tr><th class="col-rank">位</th><th>プレイヤー</th><th>反転数</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div id="divisionsContainer" class="division-grid"></div>
+        </div>
+
+        <div id="playerPage" class="hidden">
+            <a href="#" class="back-btn" onclick="location.hash=''; return false;">← 戻る</a>
+            <div class="player-header">
+                <h1 id="detailPlayerName"></h1>
+                <p>INDIVIDUAL PREDICTIONS</p>
+            </div>
+            <div id="playerPredictionsGrid" class="division-grid"></div>
         </div>
     </div>
-</div>
 
-<div class="container">
+    <script>
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbyO5_oG_IAp8whEPVHdSLKiP945F-fCb9uPymUo6hm3ZNu93-rqZKpQj-bfv7diGcXZ/exec";
+        let globalData = null;
+        const getLogo = (id) => `https://www.mlbstatic.com/team-logos/${id}.svg`;
 
-    <!-- 総合順位 -->
-    <div class="card">
-        <h2>🏆 総合順位</h2>
-        <table id="scoreTable">
-            <thead>
-                <tr>
-                    <th>位</th>
-                    <th>プレイヤー</th>
-                    <th>反転数</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
+        async function loadData() {
+            try {
+                const res = await fetch('./data.json?' + Date.now());
+                globalData = await res.json();
+                renderTopPage();
+                handleRouting();
+            } catch (e) { document.getElementById('lastUpdated').innerText = "未取得"; }
+        }
 
-    <!-- 地区 -->
-    <div id="divisionsContainer" class="division-grid"></div>
-
-</div>
-
-<script>
-let globalData=null;
-
-const getLogo=(id)=>`https://www.mlbstatic.com/team-logos/${id}.svg`;
-
-async function loadData(){
-    const res=await fetch('./data.json?'+Date.now());
-    globalData=await res.json();
-    render();
-}
-
-function render(){
-    document.getElementById("lastUpdated").innerText=globalData.last_updated;
-
-    // 総合順位
-    const tbody=document.querySelector("#scoreTable tbody");
-    tbody.innerHTML=Object.entries(globalData.scores)
-        .sort((a,b)=>a[1]-b[1])
-        .map(([name,score],i)=>`
-            <tr>
-                <td>${i+1}</td>
-                <td><span class="clickable-name">${name}</span></td>
-                <td class="score-total">${score}</td>
-            </tr>
-        `).join("");
-
-    // 地区
-    const container=document.getElementById("divisionsContainer");
-    container.innerHTML=globalData.divisions.map(div=>`
-        <div class="card">
-            <h3>${div.name}</h3>
-            <table>
-                <thead>
+        function renderTopPage() {
+            document.getElementById('lastUpdated').innerText = globalData.last_updated;
+            const scoreBody = document.querySelector('#scoreTable tbody');
+            scoreBody.innerHTML = Object.entries(globalData.scores)
+                .sort((a, b) => a[1] - b[1])
+                .map(([name, score], i) => `
                     <tr>
-                        <th>実順位</th>
-                        <th>チーム</th>
-                        <th>細川</th>
-                        <th>井口</th>
-                        <th>田中</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${div.teams.map(t=>`
-                        <tr>
-                            <td>${t.actual_rank}</td>
-                            <td>
-                                <div class="team-cell">
-                                    <img src="${getLogo(t.id)}">
-                                    <span>${t.name}</span>
-                                </div>
-                            </td>
-                            <td>${t.predictions["細川峻平"]}</td>
-                            <td>${t.predictions["井口健介"]}</td>
-                            <td>${t.predictions["田中雄太郎"]}</td>
-                        </tr>
-                    `).join("")}
-                </tbody>
-            </table>
-        </div>
-    `).join("");
-}
+                        <td>${i+1}</td>
+                        <td><span class="clickable-name" onclick="location.hash='${encodeURIComponent(name)}'">${name}</span></td>
+                        <td class="score-total">${score}</td>
+                    </tr>`).join('');
 
-loadData();
-</script>
+            const divContainer = document.getElementById('divisionsContainer');
+            divContainer.innerHTML = globalData.divisions.map(div => `
+                <div class="card">
+                    <h3>${div.name}</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-rank">実</th>
+                                <th class="col-team">チーム</th>
+                                <th class="col-user">井口</th>
+                                <th class="col-user">細川</th>
+                                <th class="col-user">田中</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${div.teams.map(t => `
+                                <tr>
+                                    <td>${t.actual_rank}</td>
+                                    <td>
+                                        <div class="team-cell">
+                                            <img class="team-logo" src="${getLogo(t.id)}" onerror="this.src='https://www.mlbstatic.com/team-logos/league/1.svg'">
+                                            <span class="team-name-text">${t.name}</span>
+                                        </div>
+                                    </td>
+                                    <td>${t.predictions["井口健介"]}</td>
+                                    <td>${t.predictions["細川峻平"]}</td>
+                                    <td>${t.predictions["田中雄太郎"]}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `).join('');
+        }
 
+        function renderPlayerDetail(playerName) {
+            document.getElementById('topPage').classList.add('hidden');
+            document.getElementById('playerPage').classList.remove('hidden');
+            document.getElementById('detailPlayerName').innerText = playerName;
+            const grid = document.getElementById('playerPredictionsGrid');
+            grid.innerHTML = globalData.divisions.map(div => {
+                const sortedTeams = [...div.teams].sort((a, b) => (a.predictions[playerName] || 99) - (b.predictions[playerName] || 99));
+                return `<div class="card">
+                    <h3>${div.name}</h3>
+                    ${sortedTeams.map(t => `
+                        <div class="prediction-row">
+                            <div class="rank-badge">${t.predictions[playerName]}</div>
+                            <img class="team-logo team-logo-large" src="${getLogo(t.id)}">
+                            <div style="text-align: left;">
+                                <div style="font-weight:bold; font-size:0.9rem;">${t.name}</div>
+                                <div style="font-size:0.75rem; color:#777">現在: ${t.actual_rank}位</div>
+                            </div>
+                        </div>`).join('')}
+                </div>`;
+            }).join('');
+        }
+
+        function handleRouting() {
+            const hash = decodeURIComponent(location.hash.replace('#', ''));
+            if (hash && globalData && globalData.scores[hash] !== undefined) {
+                renderPlayerDetail(hash);
+                window.scrollTo(0, 0);
+            } else {
+                document.getElementById('topPage').classList.remove('hidden');
+                document.getElementById('playerPage').classList.add('hidden');
+            }
+        }
+
+        window.onhashchange = handleRouting;
+        document.getElementById('updateButton').onclick = async () => {
+            if(!confirm("更新しますか？")) return;
+            try { await fetch(GAS_URL, { method: 'POST', mode: 'no-cors' }); alert("リクエスト完了"); } catch (e) { alert("エラー"); }
+        };
+        loadData();
+    </script>
 </body>
 </html>

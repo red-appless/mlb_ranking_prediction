@@ -12,41 +12,63 @@
         }
         body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: var(--bg-color); margin: 0; padding: 20px; color: #333; }
         .container { max-width: 1200px; margin: 0 auto; }
-        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 25px; }
+        
+        /* カード基本スタイル */
+        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 25px; border-top: 4px solid var(--mlb-blue); }
         h1, h2, h3 { color: var(--mlb-blue); text-align: center; }
         
-        /* Navigation */
-        .back-btn { display: inline-block; margin-bottom: 15px; color: var(--mlb-blue); font-weight: bold; text-decoration: none; cursor: pointer; }
-
-        /* Buttons & Controls */
+        /* トップページ要素 */
         .header-box { text-align: center; margin-bottom: 10px; }
-        button { background-color: var(--mlb-red); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        button:hover { background-color: #b3142b; }
-        button:disabled { background-color: #ccc; cursor: not-allowed; }
+        .update-btn { background-color: var(--mlb-red); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .update-btn:hover { background-color: #b3142b; }
+        .update-btn:disabled { background-color: #ccc; cursor: not-allowed; }
 
-        /* Table Styling */
+        /* テーブルスタイル */
         table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.95em; }
-        th, td { padding: 10px 8px; border: 1px solid #eee; text-align: center; }
+        th, td { padding: 12px 8px; border: 1px solid #eee; text-align: center; }
         th { background-color: var(--mlb-blue); color: white; }
         tr:nth-child(even) { background-color: #f8f9fa; }
         
-        .clickable-name { color: var(--mlb-blue); text-decoration: underline; cursor: pointer; font-weight: bold; }
+        .clickable-name { color: var(--mlb-blue); text-decoration: underline; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .clickable-name:hover { color: var(--mlb-red); }
         .score-total { font-size: 1.3em; font-weight: bold; color: var(--mlb-red); }
 
-        /* Logo & Team Cell */
+        /* ロゴとチーム名の横並び */
         .team-cell { display: flex; align-items: center; justify-content: flex-start; gap: 10px; text-align: left; }
         .team-logo { width: 24px; height: 24px; object-fit: contain; }
-        .team-logo-large { width: 40px; height: 40px; }
+        .team-logo-large { width: 42px; height: 42px; }
 
-        /* Grid Layout */
-        .division-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(550px, 1fr)); gap: 20px; }
+        /* レイアウト */
+        .division-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 20px; }
 
-        /* Individual Page Elements */
-        .player-header { background: var(--mlb-blue); color: white; padding: 30px; border-radius: 12px; text-align: center; margin-bottom: 20px; }
-        .prediction-row { display: flex; align-items: center; padding: 12px; border-bottom: 1px solid #eee; background: white; }
-        .rank-badge { width: 30px; font-weight: bold; color: #666; }
+        /* 個別プレイヤーページ専用 */
+        .back-btn { display: inline-block; margin-bottom: 15px; color: var(--mlb-blue); font-weight: bold; text-decoration: none; cursor: pointer; font-size: 1.1em; }
+        .back-btn:hover { text-decoration: underline; }
+
+        .player-header { 
+            background: linear-gradient(135deg, var(--mlb-blue) 0%, #001a44 100%); 
+            color: white; 
+            padding: 50px 20px; 
+            border-radius: 16px; 
+            text-align: center; 
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        #detailPlayerName { 
+            color: #ffffff !important; 
+            margin: 0 0 10px 0; 
+            font-size: 3em; 
+            font-weight: 900;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5); 
+        }
+        .player-header p { color: rgba(255,255,255,0.8); margin: 0; font-size: 1.2em; letter-spacing: 1px; }
+
+        .prediction-row { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #eee; background: white; transition: 0.2s; }
+        .prediction-row:hover { background-color: #fcfcfc; }
+        .rank-badge { width: 40px; font-size: 1.4em; font-weight: bold; color: #444; text-align: center; }
         
         .hidden { display: none; }
+        @media (max-width: 600px) { .division-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -55,13 +77,14 @@
             <div class="card">
                 <h1>⚾ MLB 順位予想バトル 2026</h1>
                 <div class="header-box">
-                    <button id="updateButton">最新データに更新</button>
-                    <p>最終更新: <span id="lastUpdated">取得中...</span></p>
+                    <button id="updateButton" class="update-btn">最新データに更新</button>
+                    <p style="font-size: 0.9em; color: #666;">最終更新: <span id="lastUpdated">取得中...</span></p>
                 </div>
             </div>
 
             <div class="card">
                 <h2>🏆 総合ランキング</h2>
+                <p style="text-align:center; font-size: 0.85em; color: #888; margin-top: -10px;">名前をクリックすると個別予想の詳細を表示します</p>
                 <table id="scoreTable">
                     <thead><tr><th>位</th><th>プレイヤー</th><th>合計反転数</th></tr></thead>
                     <tbody></tbody>
@@ -74,8 +97,8 @@
         <div id="playerPage" class="hidden">
             <span class="back-btn" onclick="location.hash=''">← 総合ランキングに戻る</span>
             <div class="player-header">
-                <h1 id="detailPlayerName"></h1>
-                <p>個人予想順位リスト</p>
+                <h1 id="detailPlayerName">取得中...</h1>
+                <p>INDIVIDUAL PREDICTIONS</p>
             </div>
             <div class="division-grid" id="playerPredictionsGrid"></div>
         </div>
@@ -85,7 +108,7 @@
         const GAS_URL = "https://script.google.com/macros/s/AKfycbyO5_oG_IAp8whEPVHdSLKiP945F-fCb9uPymUo6hm3ZNu93-rqZKpQj-bfv7diGcXZ/exec";
         let globalData = null;
 
-        // 公式ロゴURL
+        // MLBロゴ取得用
         const getLogo = (id) => `https://www.mlbstatic.com/team-logos/${id}.svg`;
 
         async function loadData() {
@@ -94,7 +117,10 @@
                 globalData = await res.json();
                 renderTopPage();
                 handleRouting();
-            } catch (e) { document.getElementById('lastUpdated').innerText = "データ未生成"; }
+            } catch (e) { 
+                document.getElementById('lastUpdated').innerText = "データ未生成"; 
+                console.error("Data load error:", e);
+            }
         }
 
         function renderTopPage() {
@@ -111,7 +137,7 @@
                         <td class="score-total">${score}</td>
                     </tr>`).join('');
 
-            // 各地区の比較表（元の形式 + ロゴ）
+            // 全地区比較表
             const divContainer = document.getElementById('divisionsContainer');
             divContainer.innerHTML = globalData.divisions.map(div => `
                 <div class="card">
@@ -119,11 +145,11 @@
                     <table>
                         <thead>
                             <tr>
-                                <th style="width:50px">実順位</th>
+                                <th style="width:40px">実</th>
                                 <th>チーム</th>
-                                <th style="width:60px">井口</th>
-                                <th style="width:60px">細川</th>
-                                <th style="width:60px">田中</th>
+                                <th style="width:55px">井口</th>
+                                <th style="width:55px">細川</th>
+                                <th style="width:55px">田中</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -132,7 +158,7 @@
                                     <td>${t.actual_rank}</td>
                                     <td>
                                         <div class="team-cell">
-                                            <img class="team-logo" src="${getLogo(t.id)}" alt="">
+                                            <img class="team-logo" src="${getLogo(t.id)}" onerror="this.src='https://www.mlbstatic.com/team-logos/league/1.svg'">
                                             <span>${t.name}</span>
                                         </div>
                                     </td>
@@ -154,17 +180,21 @@
 
             const grid = document.getElementById('playerPredictionsGrid');
             grid.innerHTML = globalData.divisions.map(div => {
-                const sortedTeams = [...div.teams].sort((a, b) => a.predictions[playerName] - b.predictions[playerName]);
+                // その人の予想順にソート
+                const sortedTeams = [...div.teams].sort((a, b) => 
+                    (a.predictions[playerName] || 99) - (b.predictions[playerName] || 99)
+                );
+
                 return `
                     <div class="card">
-                        <h3>${div.name}</h3>
+                        <h3 style="border-bottom: 2px solid #eee; padding-bottom: 10px;">${div.name}</h3>
                         ${sortedTeams.map(t => `
                             <div class="prediction-row">
                                 <div class="rank-badge">${t.predictions[playerName]}</div>
-                                <img class="team-logo team-logo-large" src="${getLogo(t.id)}" alt="">
-                                <div style="margin-left:15px">
-                                    <div style="font-weight:bold">${t.name}</div>
-                                    <div style="font-size:0.8em; color:#888">現在 ${t.actual_rank}位</div>
+                                <img class="team-logo team-logo-large" src="${getLogo(t.id)}" onerror="this.src='https://www.mlbstatic.com/team-logos/league/1.svg'">
+                                <div style="margin-left:20px; text-align: left;">
+                                    <div style="font-weight:bold; font-size:1.1em;">${t.name}</div>
+                                    <div style="font-size:0.85em; color:#777">現在の実順位: ${t.actual_rank}位</div>
                                 </div>
                             </div>
                         `).join('')}
@@ -187,13 +217,17 @@
         window.onhashchange = handleRouting;
 
         document.getElementById('updateButton').onclick = async () => {
-            if(!confirm("GitHub Actionsを起動しますか？")) return;
+            if(!confirm("GitHub Actionsを起動しますか？（反映まで約2分）")) return;
             const btn = document.getElementById('updateButton');
             btn.disabled = true; btn.innerText = "GAS送信中...";
             try {
                 await fetch(GAS_URL, { method: 'POST', mode: 'no-cors' });
-                alert("送信完了！2分後にリロードしてください。");
-            } catch (e) { alert("エラー"); btn.disabled = false; }
+                alert("リクエスト完了！約2分後にブラウザを再読み込みしてください。");
+            } catch (e) { 
+                alert("エラーが発生しました。"); 
+                btn.disabled = false; 
+                btn.innerText = "最新データに更新";
+            }
         };
 
         loadData();

@@ -2,7 +2,7 @@ name: MLB Update
 
 on:
   schedule:
-    - cron: '0 6 * * *' #日本時間 15:00 (UTC 06:00) に実行
+    - cron: '0 3 * * *' #日本時間 12:00 (UTC 03:00) に実行
   workflow_dispatch:
   repository_dispatch:
     types: [manual-update]

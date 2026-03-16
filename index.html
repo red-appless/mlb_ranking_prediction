@@ -21,7 +21,7 @@
             color: var(--text-main); 
         }
 
-        /* ヘッダー画像エリア（2枚目の写真を使用） */
+        /* ヘッダー画像エリア */
         .hero-header {
             position: relative;
             width: 100%;
@@ -30,7 +30,6 @@
             background-size: cover;
         }
 
-        /* 霧がかった白のカバーと下部へのグラデーション */
         .hero-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -50,29 +49,25 @@
             z-index: 2;
         }
 
-        /* タイトルエリア（画像に少し被せる） */
         .title-section {
             text-align: center;
-            margin-top: -180px; /* 位置をさらに上へ調整 */
+            margin-top: -180px;
             margin-bottom: 30px;
         }
 
         h1 { 
             color: #ffffff;
-            /* 縁取りではなく、文字の背面を少し暗くして浮かせる自然なシャドウ */
             text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); 
             font-size: 2.8rem;
-            font-weight: 700; /* 900だと漢字が潰れやすいため700に変更 */
-            letter-spacing: 0.1em; /* 漢字の密度を下げるための文字間隔 */
+            font-weight: 700;
+            letter-spacing: 0.1em;
             margin: 0 0 20px 0;
-            /* MLBらしい、よりクリーンなフォント指定 */
             font-family: 'Avenir Next', 'Segoe UI', 'Hiragino Kaku Gothic ProN', sans-serif;
         }
 
         .update-box {
             font-size: 0.75rem;
             color: #333;
-            /* 背景を透過させ、少しすりガラス風にして「浮かない」ように馴染ませる */
             background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(4px); 
             display: inline-flex;
@@ -92,7 +87,6 @@
             margin-left: 8px;
         }
         
-        /* カードデザイン */
         .card { 
             background: white; 
             border-radius: 12px; 
@@ -123,7 +117,6 @@
             border-bottom: 1px solid #eee;
         }
 
-        /* 総合順位テーブル */
         .score-table-wrapper {
             max-width: 500px;
             margin: 0 auto;
@@ -137,7 +130,6 @@
         .clickable-name { color: var(--mlb-blue); text-decoration: underline; cursor: pointer; font-weight: bold; }
         .score-total { font-weight: 800; color: var(--mlb-red); font-size: 1.5rem !important; }
 
-        /* ディビジョンテーブル */
         .division-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 20px; }
         .division-table { width: 100%; border-collapse: collapse; }
         .division-table th { background: var(--mlb-blue); color: white; padding: 10px 5px; font-size: 0.75rem; }
@@ -147,28 +139,22 @@
         .team-logo { width: 22px; height: 22px; }
         .team-name-text { font-weight: 600; }
 
-        /* プレイヤー詳細ページ専用 */
-        /* プレイヤー詳細ページ専用のヘッダー修正 */
         .detail-header {
             background: linear-gradient(135deg, var(--mlb-blue) 0%, #004ba0 100%);
             color: white;
-            /* パディングを 40px から 20px 程度に縮小 */
             padding: 20px; 
             text-align: center;
             border-radius: 12px;
             margin-bottom: 20px;
         }
 
-        /* プレイヤー名のサイズを小さく調整 */
         #detailPlayerName {
             color: white;
             margin: 0;
-            /* 2.5rem から 1.5rem 前後に縮小 */
             font-size: 1.6rem; 
             letter-spacing: 0.05em;
         }
 
-        /* PREDICTIONSの文字もバランスを見て微調整 */
         .detail-header p {
             letter-spacing: 2px;
             opacity: 0.8;
@@ -240,7 +226,6 @@
 
         async function loadData() {
             try {
-                // 本番環境では ./data.json を読み込み
                 const res = await fetch('./data.json?' + Date.now());
                 globalData = await res.json();
                 renderTopPage();
@@ -273,9 +258,9 @@
                             <tr>
                                 <th style="width:30px">順位</th>
                                 <th>チーム</th>
-                                <th style="width:50px">細川</th>
-                                <th style="width:50px">井口</th>
-                                <th style="width:50px">田中</th>
+                                <th style="width:40px">W</th>
+                                <th style="width:40px">L</th>
+                                <th style="width:60px">PCT</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -288,9 +273,9 @@
                                             <span class="team-name-text">${t.name}</span>
                                         </div>
                                     </td>
-                                    <td style="background:#fcfcfc">${t.predictions["細川峻平"]}</td>
-                                    <td>${t.predictions["井口健介"]}</td>
-                                    <td style="background:#fcfcfc">${t.predictions["田中雄太郎"]}</td>
+                                    <td>${t.wins || 0}</td>
+                                    <td>${t.losses || 0}</td>
+                                    <td style="font-weight:bold;">${(t.pct || 0).toFixed(3).replace(/^0/, '')}</td>
                                 </tr>
                             `).join('')}
                         </tbody>
@@ -304,13 +289,12 @@
             document.getElementById('playerPage').classList.remove('hidden');
             document.getElementById('detailPlayerName').innerText = playerName;
 
-                const descriptions = {
-                    "細川峻平": "全米を震撼させる、狂気の大当たり",
-                    "井口健介": "理論が導く、必然の当選確実",
-                    "田中雄太郎": "ロマンと理性が織りなす、幸福な当たりクジ"
-                };
-                document.getElementById('playerDescription').innerText = descriptions[playerName] || "Predictions";
-    
+            const descriptions = {
+                "細川峻平": "全米を震撼させる、狂気の大当たり",
+                "井口健介": "理論が導く、必然の当選確実",
+                "田中雄太郎": "ロマンと理性が織りなす、幸福な当たりクジ"
+            };
+            document.getElementById('playerDescription').innerText = descriptions[playerName] || "Predictions";
             
             const grid = document.getElementById('playerPredictionsGrid');
             grid.innerHTML = globalData.divisions.map(div => {
@@ -324,7 +308,7 @@
                             <img src="${getLogo(t.id)}" style="width:28px; margin:0 15px;">
                             <div style="text-align: left;">
                                 <div style="font-weight:bold; font-size:0.9rem;">${t.name}</div>
-                                <div style="font-size:0.75rem; color:#888;">現:${t.actual_rank}位</div>
+                                <div style="font-size:0.75rem; color:#888;">現:${t.actual_rank}位 (${(t.pct || 0).toFixed(3).replace(/^0/, '')})</div>
                             </div>
                         </div>`).join('')}
                     </div>

@@ -2,7 +2,7 @@ import requests
 import json
 import datetime
 
-# 1. チーム名とIDのマッピング (APIの実数値に準拠)
+# 1. チーム名とIDのマッピング
 TEAM_ID = {
     "ブルージェイズ": 141, "オリオールズ": 110, "ヤンキース": 147, "レッドソックス": 111, "レイズ": 139,
     "タイガース": 116, "ロイヤルズ": 118, "ガーディアンズ": 114, "ツインズ": 142, "ホワイトソックス": 145,
@@ -62,8 +62,8 @@ def count_inversions(actual, prediction):
     return inversions
 
 def main():
-    # 2025年のデータを確認中とのことなのでURLを固定、通常はyear=datetime.now().year
-    url = "https://statsapi.mlb.com/api/v1/standings?leagueId=103,104&season=2025"
+    year = 2026
+    url = f"https://statsapi.mlb.com/api/v1/standings?leagueId=103,104&season={year}"
     
     try:
         response = requests.get(url, timeout=10)
@@ -80,7 +80,6 @@ def main():
     }
 
     if "records" not in mlb_data:
-        print("Invalid API response format")
         return
 
     for record in mlb_data["records"]:
@@ -89,7 +88,8 @@ def main():
             continue
         
         division_name = DIVISION_MAP[div_id]
-        actual_standings = [team["team"]["id"] for team in record.get("teamRecords", [])]
+        team_records = record.get("teamRecords", [])
+        actual_standings = [team["team"]["id"] for team in team_records]
         
         if not actual_standings:
             continue
@@ -101,12 +101,16 @@ def main():
             user_pred = PREDICTIONS[user].get(division_name, [])
             results["scores"][user] += count_inversions(actual_standings, user_pred)
 
-        # チーム詳細データ
-        for i, team_id in enumerate(actual_standings):
+        # チーム詳細データ（成績データ追加）
+        for i, team_record in enumerate(team_records):
+            team_id = team_record["team"]["id"]
             team_info = {
                 "id": team_id,
                 "name": ID_TO_NAME.get(team_id, f"Unknown({team_id})"),
                 "actual_rank": i + 1,
+                "wins": team_record.get("wins", 0),
+                "losses": team_record.get("losses", 0),
+                "pct": float(team_record.get("winningPercentage", 0)),
                 "predictions": {user: PREDICTIONS[user][division_name].index(team_id) + 1 
                                for user in PREDICTIONS if team_id in PREDICTIONS[user].get(division_name, [])}
             }
@@ -114,7 +118,6 @@ def main():
         
         results["divisions"].append(division_entry)
 
-    # 書き出し
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(results, f, ensure_ascii=False, indent=2)
     
@@ -122,3 +125,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    

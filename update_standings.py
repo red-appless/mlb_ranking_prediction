@@ -13,7 +13,7 @@ TEAM_ID = {
 }
 ID_TO_NAME = {v: k for k, v in TEAM_ID.items()}
 
-# 2. 地区と所属チームIDの定義（再構成用）
+# 2. 地区と所属チームIDの定義
 DIVISION_STRUCTURE = {
     "American League East": [141, 110, 147, 111, 139],
     "American League Central": [116, 118, 114, 142, 145],
@@ -23,7 +23,7 @@ DIVISION_STRUCTURE = {
     "National League West": [119, 137, 109, 135, 115]
 }
 
-# 3. 予想データ（既存のまま）
+# 3. 予想データ
 PREDICTIONS = {
     "井口健介": {
         "American League East": [111, 141, 147, 110, 139],
@@ -62,8 +62,6 @@ def count_inversions(actual, prediction):
     return inversions
 
 def main():
-    # オープン戦（Spring Training）のデータを取得
-    # standingsType=springTraining を指定
     year = 2026
     url = f"https://statsapi.mlb.com/api/v1/standings?leagueId=103,104&season={year}&standingsType=springTraining"
     
@@ -81,37 +79,43 @@ def main():
         "divisions": []
     }
 
-    # 全チームの最新順位（勝率ベース）をフラットに抽出
+    # 全チームの最新スタッツを抽出
     all_teams_stats = {}
     for record in mlb_data.get("records", []):
         for team_record in record.get("teamRecords", []):
             tid = team_record["team"]["id"]
-            # 勝率（winningPercentage）を数値として取得
-            win_pct = float(team_record.get("winningPercentage", 0))
-            all_teams_stats[tid] = win_pct
+            all_teams_stats[tid] = {
+                "pct": float(team_record.get("winningPercentage", 0)),
+                "wins": team_record.get("wins", 0),
+                "losses": team_record.get("losses", 0)
+            }
 
-    # 地区ごとにチームを振り分け、地区内順位を決定
+    # 地区ごとに集計
     for div_name, div_team_ids in DIVISION_STRUCTURE.items():
-        # この地区に属するチームを勝率の高い順にソート
+        # 勝率の高い順にソート（地区内順位）
         sorted_in_div = sorted(
             div_team_ids, 
-            key=lambda tid: all_teams_stats.get(tid, 0), 
+            key=lambda tid: all_teams_stats.get(tid, {}).get("pct", 0), 
             reverse=True
         )
         
         division_entry = {"name": div_name, "teams": []}
 
-        # スコア計算（反転数）
+        # スコア計算
         for user in PREDICTIONS.keys():
             user_pred = PREDICTIONS[user].get(div_name, [])
             results["scores"][user] += count_inversions(sorted_in_div, user_pred)
 
-        # チーム詳細データ
+        # チーム詳細データ（W, L, PCTを含む）
         for i, team_id in enumerate(sorted_in_div):
+            stats = all_teams_stats.get(team_id, {"wins": 0, "losses": 0, "pct": 0})
             team_info = {
                 "id": team_id,
                 "name": ID_TO_NAME.get(team_id, f"Unknown({team_id})"),
                 "actual_rank": i + 1,
+                "wins": stats["wins"],
+                "losses": stats["losses"],
+                "pct": stats["pct"],
                 "predictions": {user: PREDICTIONS[user][div_name].index(team_id) + 1 
                                for user in PREDICTIONS if team_id in PREDICTIONS[user].get(div_name, [])}
             }
@@ -119,7 +123,6 @@ def main():
         
         results["divisions"].append(division_entry)
 
-    # 書き出し
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(results, f, ensure_ascii=False, indent=2)
     

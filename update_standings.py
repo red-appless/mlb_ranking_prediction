@@ -13,14 +13,14 @@ TEAM_ID = {
 }
 ID_TO_NAME = {v: k for k, v in TEAM_ID.items()}
 
-# 2. 地区と所属チームIDの定義
-DIVISION_STRUCTURE = {
-    "American League East": [141, 110, 147, 111, 139],
-    "American League Central": [116, 118, 114, 142, 145],
-    "American League West": [136, 117, 140, 133, 108],
-    "National League East": [121, 143, 144, 146, 120],
-    "National League Central": [158, 112, 134, 113, 138],
-    "National League West": [119, 137, 109, 135, 115]
+# 2. 地区IDと名前の対応
+DIVISION_MAP = {
+    201: "American League East",
+    202: "American League Central",
+    200: "American League West",
+    204: "National League East",
+    205: "National League Central",
+    203: "National League West"
 }
 
 # 3. 予想データ
@@ -63,7 +63,7 @@ def count_inversions(actual, prediction):
 
 def main():
     year = 2026
-    url = f"https://statsapi.mlb.com/api/v1/standings?leagueId=103,104&season={year}&standingsType=springTraining"
+    url = f"https://statsapi.mlb.com/api/v1/standings?leagueId=103,104&season={year}"
     
     try:
         response = requests.get(url, timeout=10)
@@ -79,45 +79,40 @@ def main():
         "divisions": []
     }
 
-    # 全チームの最新スタッツを抽出
-    all_teams_stats = {}
-    for record in mlb_data.get("records", []):
-        for team_record in record.get("teamRecords", []):
-            tid = team_record["team"]["id"]
-            all_teams_stats[tid] = {
-                "pct": float(team_record.get("winningPercentage", 0)),
-                "wins": team_record.get("wins", 0),
-                "losses": team_record.get("losses", 0)
-            }
+    if "records" not in mlb_data:
+        return
 
-    # 地区ごとに集計
-    for div_name, div_team_ids in DIVISION_STRUCTURE.items():
-        # 勝率の高い順にソート（地区内順位）
-        sorted_in_div = sorted(
-            div_team_ids, 
-            key=lambda tid: all_teams_stats.get(tid, {}).get("pct", 0), 
-            reverse=True
-        )
+    for record in mlb_data["records"]:
+        div_id = record.get("division", {}).get("id")
+        if div_id not in DIVISION_MAP:
+            continue
         
-        division_entry = {"name": div_name, "teams": []}
+        division_name = DIVISION_MAP[div_id]
+        team_records = record.get("teamRecords", [])
+        actual_standings = [team["team"]["id"] for team in team_records]
+        
+        if not actual_standings:
+            continue
+
+        division_entry = {"name": division_name, "teams": []}
 
         # スコア計算
         for user in PREDICTIONS.keys():
-            user_pred = PREDICTIONS[user].get(div_name, [])
-            results["scores"][user] += count_inversions(sorted_in_div, user_pred)
+            user_pred = PREDICTIONS[user].get(division_name, [])
+            results["scores"][user] += count_inversions(actual_standings, user_pred)
 
-        # チーム詳細データ（W, L, PCTを含む）
-        for i, team_id in enumerate(sorted_in_div):
-            stats = all_teams_stats.get(team_id, {"wins": 0, "losses": 0, "pct": 0})
+        # チーム詳細データ（成績データ追加）
+        for i, team_record in enumerate(team_records):
+            team_id = team_record["team"]["id"]
             team_info = {
                 "id": team_id,
                 "name": ID_TO_NAME.get(team_id, f"Unknown({team_id})"),
                 "actual_rank": i + 1,
-                "wins": stats["wins"],
-                "losses": stats["losses"],
-                "pct": stats["pct"],
-                "predictions": {user: PREDICTIONS[user][div_name].index(team_id) + 1 
-                               for user in PREDICTIONS if team_id in PREDICTIONS[user].get(div_name, [])}
+                "wins": team_record.get("wins", 0),
+                "losses": team_record.get("losses", 0),
+                "pct": float(team_record.get("winningPercentage", 0)),
+                "predictions": {user: PREDICTIONS[user][division_name].index(team_id) + 1 
+                               for user in PREDICTIONS if team_id in PREDICTIONS[user].get(division_name, [])}
             }
             division_entry["teams"].append(team_info)
         
@@ -126,7 +121,8 @@ def main():
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(results, f, ensure_ascii=False, indent=2)
     
-    print(f"Spring Training data updated. Divisions: {len(results['divisions'])}")
+    print(f"Successfully updated. Divisions found: {len(results['divisions'])}")
 
 if __name__ == "__main__":
     main()
+    

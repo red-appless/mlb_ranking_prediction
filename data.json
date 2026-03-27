@@ -1,7 +1,7 @@
 {
-  "last_updated": "2026-03-27 09:05:09 JST",
+  "last_updated": "2026-03-27 14:08:02 JST",
   "scores": {
-    "井口健介": 22,
+    "井口健介": 24,
     "細川峻平": 28,
     "田中雄太郎": 24
   },
@@ -80,9 +80,22 @@
       "name": "American League Central",
       "teams": [
         {
+          "id": 114,
+          "name": "ガーディアンズ",
+          "actual_rank": 1,
+          "wins": 1,
+          "losses": 0,
+          "pct": 1.0,
+          "predictions": {
+            "井口健介": 3,
+            "細川峻平": 2,
+            "田中雄太郎": 1
+          }
+        },
+        {
           "id": 116,
           "name": "タイガース",
-          "actual_rank": 1,
+          "actual_rank": 2,
           "wins": 1,
           "losses": 0,
           "pct": 1.0,
@@ -90,19 +103,6 @@
             "井口健介": 1,
             "細川峻平": 1,
             "田中雄太郎": 2
-          }
-        },
-        {
-          "id": 114,
-          "name": "ガーディアンズ",
-          "actual_rank": 2,
-          "wins": 0,
-          "losses": 0,
-          "pct": 0.0,
-          "predictions": {
-            "井口健介": 3,
-            "細川峻平": 2,
-            "田中雄太郎": 1
           }
         },
         {
@@ -176,22 +176,9 @@
           }
         },
         {
-          "id": 136,
-          "name": "マリナーズ",
-          "actual_rank": 3,
-          "wins": 0,
-          "losses": 0,
-          "pct": 0.0,
-          "predictions": {
-            "井口健介": 1,
-            "細川峻平": 2,
-            "田中雄太郎": 1
-          }
-        },
-        {
           "id": 117,
           "name": "アストロズ",
-          "actual_rank": 4,
+          "actual_rank": 3,
           "wins": 0,
           "losses": 1,
           "pct": 0.0,
@@ -199,6 +186,19 @@
             "井口健介": 2,
             "細川峻平": 1,
             "田中雄太郎": 3
+          }
+        },
+        {
+          "id": 136,
+          "name": "マリナーズ",
+          "actual_rank": 4,
+          "wins": 0,
+          "losses": 1,
+          "pct": 0.0,
+          "predictions": {
+            "井口健介": 1,
+            "細川峻平": 2,
+            "田中雄太郎": 1
           }
         },
         {
@@ -360,25 +360,12 @@
       "name": "National League West",
       "teams": [
         {
-          "id": 109,
-          "name": "ダイアモンドバックス",
-          "actual_rank": 1,
-          "wins": 0,
-          "losses": 0,
-          "pct": 0.0,
-          "predictions": {
-            "井口健介": 3,
-            "細川峻平": 4,
-            "田中雄太郎": 3
-          }
-        },
-        {
           "id": 119,
           "name": "ドジャース",
-          "actual_rank": 2,
-          "wins": 0,
+          "actual_rank": 1,
+          "wins": 1,
           "losses": 0,
-          "pct": 0.0,
+          "pct": 1.0,
           "predictions": {
             "井口健介": 1,
             "細川峻平": 2,
@@ -388,7 +375,7 @@
         {
           "id": 115,
           "name": "ロッキーズ",
-          "actual_rank": 3,
+          "actual_rank": 2,
           "wins": 0,
           "losses": 0,
           "pct": 0.0,
@@ -396,6 +383,19 @@
             "井口健介": 5,
             "細川峻平": 5,
             "田中雄太郎": 5
+          }
+        },
+        {
+          "id": 109,
+          "name": "ダイアモンドバックス",
+          "actual_rank": 3,
+          "wins": 0,
+          "losses": 1,
+          "pct": 0.0,
+          "predictions": {
+            "井口健介": 3,
+            "細川峻平": 4,
+            "田中雄太郎": 3
           }
         },
         {

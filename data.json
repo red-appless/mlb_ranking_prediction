@@ -1,9 +1,9 @@
 {
-  "last_updated": "2026-04-01 12:43:22 JST",
+  "last_updated": "2026-04-01 14:25:37 JST",
   "scores": {
-    "井口健介": 24,
-    "細川峻平": 24,
-    "田中雄太郎": 26
+    "井口健介": 23,
+    "細川峻平": 27,
+    "田中雄太郎": 29
   },
   "divisions": [
     {
@@ -26,9 +26,9 @@
           "id": 147,
           "name": "ヤンキース",
           "actual_rank": 2,
-          "wins": 3,
+          "wins": 4,
           "losses": 1,
-          "pct": 0.75,
+          "pct": 0.8,
           "predictions": {
             "井口健介": 3,
             "細川峻平": 3,
@@ -80,22 +80,9 @@
       "name": "American League Central",
       "teams": [
         {
-          "id": 114,
-          "name": "ガーディアンズ",
-          "actual_rank": 1,
-          "wins": 3,
-          "losses": 2,
-          "pct": 0.6,
-          "predictions": {
-            "井口健介": 3,
-            "細川峻平": 2,
-            "田中雄太郎": 1
-          }
-        },
-        {
           "id": 118,
           "name": "ロイヤルズ",
-          "actual_rank": 2,
+          "actual_rank": 1,
           "wins": 2,
           "losses": 2,
           "pct": 0.5,
@@ -106,12 +93,25 @@
           }
         },
         {
+          "id": 114,
+          "name": "ガーディアンズ",
+          "actual_rank": 2,
+          "wins": 3,
+          "losses": 3,
+          "pct": 0.5,
+          "predictions": {
+            "井口健介": 3,
+            "細川峻平": 2,
+            "田中雄太郎": 1
+          }
+        },
+        {
           "id": 116,
           "name": "タイガース",
           "actual_rank": 3,
           "wins": 2,
-          "losses": 2,
-          "pct": 0.5,
+          "losses": 3,
+          "pct": 0.4,
           "predictions": {
             "井口健介": 1,
             "細川峻平": 1,
@@ -176,22 +176,9 @@
           }
         },
         {
-          "id": 136,
-          "name": "マリナーズ",
-          "actual_rank": 3,
-          "wins": 3,
-          "losses": 2,
-          "pct": 0.6,
-          "predictions": {
-            "井口健介": 1,
-            "細川峻平": 2,
-            "田中雄太郎": 1
-          }
-        },
-        {
           "id": 108,
           "name": "エンゼルス",
-          "actual_rank": 4,
+          "actual_rank": 3,
           "wins": 3,
           "losses": 3,
           "pct": 0.5,
@@ -199,6 +186,19 @@
             "井口健介": 5,
             "細川峻平": 5,
             "田中雄太郎": 5
+          }
+        },
+        {
+          "id": 136,
+          "name": "マリナーズ",
+          "actual_rank": 4,
+          "wins": 3,
+          "losses": 3,
+          "pct": 0.5,
+          "predictions": {
+            "井口健介": 1,
+            "細川峻平": 2,
+            "田中雄太郎": 1
           }
         },
         {
@@ -363,9 +363,9 @@
           "id": 119,
           "name": "ドジャース",
           "actual_rank": 1,
-          "wins": 3,
+          "wins": 4,
           "losses": 1,
-          "pct": 0.75,
+          "pct": 0.8,
           "predictions": {
             "井口健介": 1,
             "細川峻平": 2,
@@ -376,9 +376,9 @@
           "id": 137,
           "name": "ジャイアンツ",
           "actual_rank": 2,
-          "wins": 1,
+          "wins": 2,
           "losses": 3,
-          "pct": 0.25,
+          "pct": 0.4,
           "predictions": {
             "井口健介": 2,
             "細川峻平": 1,
@@ -386,29 +386,29 @@
           }
         },
         {
-          "id": 135,
-          "name": "パドレス",
-          "actual_rank": 3,
-          "wins": 1,
-          "losses": 3,
-          "pct": 0.25,
-          "predictions": {
-            "井口健介": 4,
-            "細川峻平": 3,
-            "田中雄太郎": 2
-          }
-        },
-        {
           "id": 109,
           "name": "ダイアモンドバックス",
-          "actual_rank": 4,
-          "wins": 1,
+          "actual_rank": 3,
+          "wins": 2,
           "losses": 3,
-          "pct": 0.25,
+          "pct": 0.4,
           "predictions": {
             "井口健介": 3,
             "細川峻平": 4,
             "田中雄太郎": 3
+          }
+        },
+        {
+          "id": 135,
+          "name": "パドレス",
+          "actual_rank": 4,
+          "wins": 1,
+          "losses": 4,
+          "pct": 0.2,
+          "predictions": {
+            "井口健介": 4,
+            "細川峻平": 3,
+            "田中雄太郎": 2
           }
         },
         {

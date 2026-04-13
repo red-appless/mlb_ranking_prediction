@@ -1,9 +1,9 @@
 {
-  "last_updated": "2026-04-13 09:51:25 JST",
+  "last_updated": "2026-04-13 14:43:35 JST",
   "scores": {
-    "井口健介": 35,
-    "細川峻平": 37,
-    "田中雄太郎": 33
+    "井口健介": 36,
+    "細川峻平": 38,
+    "田中雄太郎": 34
   },
   "divisions": [
     {
@@ -80,22 +80,9 @@
       "name": "American League Central",
       "teams": [
         {
-          "id": 114,
-          "name": "ガーディアンズ",
-          "actual_rank": 1,
-          "wins": 9,
-          "losses": 6,
-          "pct": 0.6,
-          "predictions": {
-            "井口健介": 3,
-            "細川峻平": 2,
-            "田中雄太郎": 1
-          }
-        },
-        {
           "id": 142,
           "name": "ツインズ",
-          "actual_rank": 2,
+          "actual_rank": 1,
           "wins": 9,
           "losses": 7,
           "pct": 0.563,
@@ -103,6 +90,19 @@
             "井口健介": 4,
             "細川峻平": 5,
             "田中雄太郎": 5
+          }
+        },
+        {
+          "id": 114,
+          "name": "ガーディアンズ",
+          "actual_rank": 2,
+          "wins": 9,
+          "losses": 7,
+          "pct": 0.563,
+          "predictions": {
+            "井口健介": 3,
+            "細川峻平": 2,
+            "田中雄太郎": 1
           }
         },
         {
@@ -223,9 +223,9 @@
           "id": 144,
           "name": "ブレーブス",
           "actual_rank": 1,
-          "wins": 9,
+          "wins": 10,
           "losses": 6,
-          "pct": 0.6,
+          "pct": 0.625,
           "predictions": {
             "井口健介": 3,
             "細川峻平": 3,

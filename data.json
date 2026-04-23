@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-23 13:24:44 JST",
+  "last_updated": "2026-04-23 14:31:23 JST",
   "scores": {
     "井口健介": 36,
     "細川峻平": 32,
@@ -123,8 +123,8 @@
           "name": "ホワイトソックス",
           "actual_rank": 4,
           "wins": 9,
-          "losses": 14,
-          "pct": 0.391,
+          "losses": 15,
+          "pct": 0.375,
           "predictions": {
             "井口健介": 5,
             "細川峻平": 3,
@@ -389,9 +389,9 @@
           "id": 109,
           "name": "ダイアモンドバックス",
           "actual_rank": 3,
-          "wins": 13,
+          "wins": 14,
           "losses": 10,
-          "pct": 0.565,
+          "pct": 0.583,
           "predictions": {
             "井口健介": 3,
             "細川峻平": 4,

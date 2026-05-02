@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-02 13:31:45 JST",
+  "last_updated": "2026-05-02 14:38:04 JST",
   "scores": {
     "井口健介": 34,
     "細川峻平": 28,
@@ -83,9 +83,9 @@
           "id": 114,
           "name": "ガーディアンズ",
           "actual_rank": 1,
-          "wins": 16,
+          "wins": 17,
           "losses": 16,
-          "pct": 0.5,
+          "pct": 0.515,
           "predictions": {
             "井口健介": 3,
             "細川峻平": 2,
@@ -135,9 +135,9 @@
           "id": 118,
           "name": "ロイヤルズ",
           "actual_rank": 5,
-          "wins": 12,
+          "wins": 13,
           "losses": 19,
-          "pct": 0.387,
+          "pct": 0.406,
           "predictions": {
             "井口健介": 2,
             "細川峻平": 4,
@@ -154,8 +154,8 @@
           "name": "アスレチックス",
           "actual_rank": 1,
           "wins": 17,
-          "losses": 14,
-          "pct": 0.548,
+          "losses": 15,
+          "pct": 0.531,
           "predictions": {
             "井口健介": 4,
             "細川峻平": 4,
@@ -180,8 +180,8 @@
           "name": "マリナーズ",
           "actual_rank": 3,
           "wins": 16,
-          "losses": 16,
-          "pct": 0.5,
+          "losses": 17,
+          "pct": 0.485,
           "predictions": {
             "井口健介": 1,
             "細川峻平": 2,

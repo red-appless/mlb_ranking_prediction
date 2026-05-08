@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-08 12:08:36 JST",
+  "last_updated": "2026-05-08 14:31:07 JST",
   "scores": {
     "井口健介": 33,
     "細川峻平": 27,
@@ -306,9 +306,9 @@
           "id": 138,
           "name": "カージナルス",
           "actual_rank": 2,
-          "wins": 21,
+          "wins": 22,
           "losses": 15,
-          "pct": 0.583,
+          "pct": 0.595,
           "predictions": {
             "井口健介": 5,
             "細川峻平": 5,
@@ -377,8 +377,8 @@
           "name": "パドレス",
           "actual_rank": 2,
           "wins": 22,
-          "losses": 14,
-          "pct": 0.611,
+          "losses": 15,
+          "pct": 0.595,
           "predictions": {
             "井口健介": 4,
             "細川峻平": 3,

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-18 07:55:20 JST",
+  "last_updated": "2026-05-18 09:51:43 JST",
   "scores": {
     "井口健介": 32,
     "細川峻平": 26,
@@ -389,9 +389,9 @@
           "id": 109,
           "name": "ダイアモンドバックス",
           "actual_rank": 3,
-          "wins": 21,
+          "wins": 22,
           "losses": 23,
-          "pct": 0.477,
+          "pct": 0.489,
           "predictions": {
             "井口健介": 3,
             "細川峻平": 4,
@@ -416,8 +416,8 @@
           "name": "ロッキーズ",
           "actual_rank": 5,
           "wins": 18,
-          "losses": 28,
-          "pct": 0.391,
+          "losses": 29,
+          "pct": 0.383,
           "predictions": {
             "井口健介": 5,
             "細川峻平": 5,

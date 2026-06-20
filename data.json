@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-19 17:32:15 JST",
+  "last_updated": "2026-06-20 09:33:13 JST",
   "scores": {
     "井口健介": 31,
     "細川峻平": 27,
@@ -40,8 +40,8 @@
           "name": "ブルージェイズ",
           "actual_rank": 3,
           "wins": 37,
-          "losses": 38,
-          "pct": 0.493,
+          "losses": 39,
+          "pct": 0.487,
           "predictions": {
             "井口健介": 2,
             "細川峻平": 1,
@@ -319,9 +319,9 @@
           "id": 112,
           "name": "カブス",
           "actual_rank": 3,
-          "wins": 39,
+          "wins": 40,
           "losses": 36,
-          "pct": 0.52,
+          "pct": 0.526,
           "predictions": {
             "井口健介": 2,
             "細川峻平": 1,

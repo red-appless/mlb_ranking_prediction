@@ -1,9 +1,9 @@
 {
-  "last_updated": "2026-06-25 11:16:32 JST",
+  "last_updated": "2026-06-25 15:49:01 JST",
   "scores": {
-    "井口健介": 28,
-    "細川峻平": 26,
-    "田中雄太郎": 18
+    "井口健介": 27,
+    "細川峻平": 25,
+    "田中雄太郎": 19
   },
   "divisions": [
     {
@@ -110,8 +110,8 @@
           "name": "ツインズ",
           "actual_rank": 3,
           "wins": 38,
-          "losses": 43,
-          "pct": 0.469,
+          "losses": 44,
+          "pct": 0.463,
           "predictions": {
             "井口健介": 4,
             "細川峻平": 5,
@@ -163,22 +163,9 @@
           }
         },
         {
-          "id": 133,
-          "name": "アスレチックス",
-          "actual_rank": 2,
-          "wins": 38,
-          "losses": 41,
-          "pct": 0.481,
-          "predictions": {
-            "井口健介": 4,
-            "細川峻平": 4,
-            "田中雄太郎": 2
-          }
-        },
-        {
           "id": 117,
           "name": "アストロズ",
-          "actual_rank": 3,
+          "actual_rank": 2,
           "wins": 39,
           "losses": 43,
           "pct": 0.476,
@@ -186,6 +173,19 @@
             "井口健介": 2,
             "細川峻平": 1,
             "田中雄太郎": 3
+          }
+        },
+        {
+          "id": 133,
+          "name": "アスレチックス",
+          "actual_rank": 3,
+          "wins": 38,
+          "losses": 42,
+          "pct": 0.475,
+          "predictions": {
+            "井口健介": 4,
+            "細川峻平": 4,
+            "田中雄太郎": 2
           }
         },
         {
@@ -224,8 +224,8 @@
           "name": "ブレーブス",
           "actual_rank": 1,
           "wins": 48,
-          "losses": 30,
-          "pct": 0.615,
+          "losses": 31,
+          "pct": 0.608,
           "predictions": {
             "井口健介": 3,
             "細川峻平": 3,
@@ -293,9 +293,9 @@
           "id": 158,
           "name": "ブリュワーズ",
           "actual_rank": 1,
-          "wins": 48,
+          "wins": 49,
           "losses": 29,
-          "pct": 0.623,
+          "pct": 0.628,
           "predictions": {
             "井口健介": 1,
             "細川峻平": 2,
@@ -307,8 +307,8 @@
           "name": "カージナルス",
           "actual_rank": 2,
           "wins": 42,
-          "losses": 35,
-          "pct": 0.545,
+          "losses": 36,
+          "pct": 0.538,
           "predictions": {
             "井口健介": 5,
             "細川峻平": 5,
@@ -346,8 +346,8 @@
           "name": "レッズ",
           "actual_rank": 5,
           "wins": 37,
-          "losses": 41,
-          "pct": 0.474,
+          "losses": 42,
+          "pct": 0.468,
           "predictions": {
             "井口健介": 4,
             "細川峻平": 3,
@@ -363,9 +363,9 @@
           "id": 119,
           "name": "ドジャース",
           "actual_rank": 1,
-          "wins": 51,
+          "wins": 52,
           "losses": 29,
-          "pct": 0.638,
+          "pct": 0.642,
           "predictions": {
             "井口健介": 1,
             "細川峻平": 2,
@@ -376,9 +376,9 @@
           "id": 135,
           "name": "パドレス",
           "actual_rank": 2,
-          "wins": 41,
+          "wins": 42,
           "losses": 37,
-          "pct": 0.526,
+          "pct": 0.532,
           "predictions": {
             "井口健介": 4,
             "細川峻平": 3,
@@ -389,9 +389,9 @@
           "id": 109,
           "name": "ダイアモンドバックス",
           "actual_rank": 3,
-          "wins": 40,
+          "wins": 41,
           "losses": 39,
-          "pct": 0.506,
+          "pct": 0.513,
           "predictions": {
             "井口健介": 3,
             "細川峻平": 4,
@@ -402,9 +402,9 @@
           "id": 137,
           "name": "ジャイアンツ",
           "actual_rank": 4,
-          "wins": 32,
+          "wins": 33,
           "losses": 46,
-          "pct": 0.41,
+          "pct": 0.418,
           "predictions": {
             "井口健介": 2,
             "細川峻平": 1,

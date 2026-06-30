@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-30 12:56:59 JST",
+  "last_updated": "2026-06-30 15:56:11 JST",
   "scores": {
     "井口健介": 28,
     "細川峻平": 26,
@@ -193,8 +193,8 @@
           "name": "アスレチックス",
           "actual_rank": 4,
           "wins": 40,
-          "losses": 44,
-          "pct": 0.476,
+          "losses": 45,
+          "pct": 0.471,
           "predictions": {
             "井口健介": 4,
             "細川峻平": 4,
@@ -363,9 +363,9 @@
           "id": 119,
           "name": "ドジャース",
           "actual_rank": 1,
-          "wins": 54,
+          "wins": 55,
           "losses": 30,
-          "pct": 0.643,
+          "pct": 0.647,
           "predictions": {
             "井口健介": 1,
             "細川峻平": 2,
@@ -389,9 +389,9 @@
           "id": 109,
           "name": "ダイアモンドバックス",
           "actual_rank": 3,
-          "wins": 41,
+          "wins": 42,
           "losses": 42,
-          "pct": 0.494,
+          "pct": 0.5,
           "predictions": {
             "井口健介": 3,
             "細川峻平": 4,
@@ -403,8 +403,8 @@
           "name": "ジャイアンツ",
           "actual_rank": 4,
           "wins": 35,
-          "losses": 48,
-          "pct": 0.422,
+          "losses": 49,
+          "pct": 0.417,
           "predictions": {
             "井口健介": 2,
             "細川峻平": 1,

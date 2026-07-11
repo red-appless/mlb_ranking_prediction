@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-11 13:46:34 JST",
+  "last_updated": "2026-07-11 14:41:20 JST",
   "scores": {
     "井口健介": 26,
     "細川峻平": 28,
@@ -224,8 +224,8 @@
           "name": "ブレーブス",
           "actual_rank": 1,
           "wins": 54,
-          "losses": 38,
-          "pct": 0.587,
+          "losses": 39,
+          "pct": 0.581,
           "predictions": {
             "井口健介": 3,
             "細川峻平": 3,
@@ -319,9 +319,9 @@
           "id": 138,
           "name": "カージナルス",
           "actual_rank": 3,
-          "wins": 48,
+          "wins": 49,
           "losses": 44,
-          "pct": 0.522,
+          "pct": 0.527,
           "predictions": {
             "井口健介": 5,
             "細川峻平": 5,
@@ -364,8 +364,8 @@
           "name": "ドジャース",
           "actual_rank": 1,
           "wins": 61,
-          "losses": 33,
-          "pct": 0.649,
+          "losses": 34,
+          "pct": 0.642,
           "predictions": {
             "井口健介": 1,
             "細川峻平": 2,
@@ -376,9 +376,9 @@
           "id": 109,
           "name": "ダイアモンドバックス",
           "actual_rank": 2,
-          "wins": 46,
+          "wins": 47,
           "losses": 47,
-          "pct": 0.495,
+          "pct": 0.5,
           "predictions": {
             "井口健介": 3,
             "細川峻平": 4,

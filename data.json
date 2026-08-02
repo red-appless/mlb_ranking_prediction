@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-02 13:03:26 JST",
+  "last_updated": "2026-08-02 14:57:50 JST",
   "scores": {
     "井口健介": 26,
     "細川峻平": 28,
@@ -122,9 +122,9 @@
           "id": 116,
           "name": "タイガース",
           "actual_rank": 4,
-          "wins": 52,
+          "wins": 53,
           "losses": 58,
-          "pct": 0.473,
+          "pct": 0.477,
           "predictions": {
             "井口健介": 1,
             "細川峻平": 1,
@@ -193,8 +193,8 @@
           "name": "アスレチックス",
           "actual_rank": 4,
           "wins": 45,
-          "losses": 65,
-          "pct": 0.409,
+          "losses": 66,
+          "pct": 0.405,
           "predictions": {
             "井口健介": 4,
             "細川峻平": 4,
@@ -206,8 +206,8 @@
           "name": "エンゼルス",
           "actual_rank": 5,
           "wins": 42,
-          "losses": 68,
-          "pct": 0.382,
+          "losses": 69,
+          "pct": 0.378,
           "predictions": {
             "井口健介": 5,
             "細川峻平": 5,
@@ -293,9 +293,9 @@
           "id": 158,
           "name": "ブリュワーズ",
           "actual_rank": 1,
-          "wins": 68,
+          "wins": 69,
           "losses": 41,
-          "pct": 0.624,
+          "pct": 0.627,
           "predictions": {
             "井口健介": 1,
             "細川峻平": 2,

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-17 09:22:10 JST",
+  "last_updated": "2026-08-17 12:50:02 JST",
   "scores": {
     "井口健介": 26,
     "細川峻平": 26,
@@ -154,8 +154,8 @@
           "name": "アストロズ",
           "actual_rank": 1,
           "wins": 63,
-          "losses": 61,
-          "pct": 0.508,
+          "losses": 62,
+          "pct": 0.504,
           "predictions": {
             "井口健介": 2,
             "細川峻平": 1,
@@ -179,9 +179,9 @@
           "id": 136,
           "name": "マリナーズ",
           "actual_rank": 3,
-          "wins": 58,
+          "wins": 59,
           "losses": 66,
-          "pct": 0.468,
+          "pct": 0.472,
           "predictions": {
             "井口健介": 1,
             "細川峻平": 2,

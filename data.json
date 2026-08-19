@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-19 11:42:50 JST",
+  "last_updated": "2026-08-19 12:02:24 JST",
   "scores": {
     "井口健介": 28,
     "細川峻平": 28,
@@ -154,8 +154,8 @@
           "name": "アストロズ",
           "actual_rank": 1,
           "wins": 63,
-          "losses": 62,
-          "pct": 0.504,
+          "losses": 63,
+          "pct": 0.5,
           "predictions": {
             "井口健介": 2,
             "細川峻平": 1,
@@ -166,9 +166,9 @@
           "id": 140,
           "name": "レンジャース",
           "actual_rank": 2,
-          "wins": 61,
+          "wins": 62,
           "losses": 64,
-          "pct": 0.488,
+          "pct": 0.492,
           "predictions": {
             "井口健介": 3,
             "細川峻平": 3,
@@ -192,9 +192,9 @@
           "id": 108,
           "name": "エンゼルス",
           "actual_rank": 4,
-          "wins": 49,
+          "wins": 50,
           "losses": 76,
-          "pct": 0.392,
+          "pct": 0.397,
           "predictions": {
             "井口健介": 5,
             "細川峻平": 5,
@@ -263,8 +263,8 @@
           "name": "ナショナルズ",
           "actual_rank": 4,
           "wins": 60,
-          "losses": 66,
-          "pct": 0.476,
+          "losses": 67,
+          "pct": 0.472,
           "predictions": {
             "井口健介": 5,
             "細川峻平": 4,

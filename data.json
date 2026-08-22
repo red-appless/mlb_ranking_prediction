@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-22 12:41:23 JST",
+  "last_updated": "2026-08-22 13:34:54 JST",
   "scores": {
     "井口健介": 28,
     "細川峻平": 28,
@@ -97,8 +97,8 @@
           "name": "ツインズ",
           "actual_rank": 2,
           "wins": 63,
-          "losses": 65,
-          "pct": 0.492,
+          "losses": 66,
+          "pct": 0.488,
           "predictions": {
             "井口健介": 4,
             "細川峻平": 5,
@@ -346,8 +346,8 @@
           "name": "レッズ",
           "actual_rank": 5,
           "wins": 61,
-          "losses": 67,
-          "pct": 0.477,
+          "losses": 68,
+          "pct": 0.473,
           "predictions": {
             "井口健介": 4,
             "細川峻平": 3,
@@ -376,9 +376,9 @@
           "id": 135,
           "name": "パドレス",
           "actual_rank": 2,
-          "wins": 68,
+          "wins": 69,
           "losses": 60,
-          "pct": 0.531,
+          "pct": 0.535,
           "predictions": {
             "井口健介": 4,
             "細川峻平": 3,
@@ -389,9 +389,9 @@
           "id": 109,
           "name": "ダイアモンドバックス",
           "actual_rank": 3,
-          "wins": 67,
+          "wins": 68,
           "losses": 61,
-          "pct": 0.523,
+          "pct": 0.527,
           "predictions": {
             "井口健介": 3,
             "細川峻平": 4,

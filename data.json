@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-21 23:56:06 JST",
+  "last_updated": "2026-08-22 10:50:24 JST",
   "scores": {
     "井口健介": 28,
     "細川峻平": 28,
@@ -14,8 +14,8 @@
           "name": "レイズ",
           "actual_rank": 1,
           "wins": 76,
-          "losses": 51,
-          "pct": 0.598,
+          "losses": 52,
+          "pct": 0.594,
           "predictions": {
             "井口健介": 5,
             "細川峻平": 5,
@@ -65,9 +65,9 @@
           "id": 110,
           "name": "オリオールズ",
           "actual_rank": 5,
-          "wins": 61,
+          "wins": 62,
           "losses": 67,
-          "pct": 0.477,
+          "pct": 0.481,
           "predictions": {
             "井口健介": 4,
             "細川峻平": 2,
@@ -224,8 +224,8 @@
           "name": "ブレーブス",
           "actual_rank": 1,
           "wins": 75,
-          "losses": 53,
-          "pct": 0.586,
+          "losses": 54,
+          "pct": 0.581,
           "predictions": {
             "井口健介": 3,
             "細川峻平": 3,
@@ -293,9 +293,9 @@
           "id": 158,
           "name": "ブリュワーズ",
           "actual_rank": 1,
-          "wins": 79,
+          "wins": 80,
           "losses": 49,
-          "pct": 0.617,
+          "pct": 0.62,
           "predictions": {
             "井口健介": 1,
             "細川峻平": 2,

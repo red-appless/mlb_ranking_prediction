@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-23 12:13:27 JST",
+  "last_updated": "2026-08-23 12:50:11 JST",
   "scores": {
     "井口健介": 27,
     "細川峻平": 27,
@@ -110,8 +110,8 @@
           "name": "ツインズ",
           "actual_rank": 3,
           "wins": 63,
-          "losses": 66,
-          "pct": 0.488,
+          "losses": 67,
+          "pct": 0.485,
           "predictions": {
             "井口健介": 4,
             "細川峻平": 5,
@@ -376,9 +376,9 @@
           "id": 135,
           "name": "パドレス",
           "actual_rank": 2,
-          "wins": 69,
+          "wins": 70,
           "losses": 60,
-          "pct": 0.535,
+          "pct": 0.538,
           "predictions": {
             "井口健介": 4,
             "細川峻平": 3,
